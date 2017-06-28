@@ -1,12 +1,23 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 const path = require('path');
+
+const isProd = process.env.NODE_ENV === 'production';
 
 const extractSass = new ExtractTextPlugin({
   filename: 'app.css',
-  disable: false,
+  disable: !isProd,
   allChunks: true
 });
+
+const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
+const cssProd = extractSass.extract({
+  fallback: 'style-loader',
+  use: ['css-loader', 'sass-loader'],
+  publicPath: path.resolve(__dirname, 'dist')
+});
+let cssConf = isProd ? cssProd : cssDev;
 
 module.exports = {
   entry: {
@@ -21,22 +32,23 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        use: extractSass.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
-          publicPath: path.resolve(__dirname, 'dist')
-        })
+        use: cssConf
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'babel-loader'
+      },
+      {
+        test: /\.pug$/,
+        use: ['html-loader', 'pug-html-loader'],
       }
     ]
   },
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
+    hot: true,
     port: 9000,
     stats: "errors-only",
     open: true,
@@ -48,14 +60,18 @@ module.exports = {
       //   collapseWhitespace: true
       // },
       hash: true,
-      template: './src/index.html'
+      excludeChunks: ['contact'],
+      template: './src/index.pug'
     }),
     new HtmlWebpackPlugin({
       title: 'Contact page',
       hash: true,
+      chunks: ['contact'],
       filename: 'contact.html',
       template: './src/contact.html'
     }),
-    extractSass
+    extractSass,
+    new webpack.HotModuleReplacementPlugin(), // Enable HMR
+    new webpack.NamedModulesPlugin(),
   ]
 }
