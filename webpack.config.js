@@ -2,20 +2,29 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
+const extractSass = new ExtractTextPlugin({
+  filename: 'app.css',
+  disable: false,
+  allChunks: true
+});
+
 module.exports = {
-  entry: './src/app.js',
+  entry: {
+    app: './src/app.js',
+    contact: './src/contact.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
+        use: extractSass.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
+          use: ['css-loader', 'sass-loader'],
+          publicPath: path.resolve(__dirname, 'dist')
         })
       },
       {
@@ -39,12 +48,14 @@ module.exports = {
       //   collapseWhitespace: true
       // },
       hash: true,
-      template: './src/index.ejs'
+      template: './src/index.html'
     }),
-    new ExtractTextPlugin({
-      filename: 'app.css',
-      disable: false,
-      allChunks: true
-    })
+    new HtmlWebpackPlugin({
+      title: 'Contact page',
+      hash: true,
+      filename: 'contact.html',
+      template: './src/contact.html'
+    }),
+    extractSass
   ]
 }
