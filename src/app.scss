@@ -1,9 +1,12 @@
+html, body {
+  height: 100%;
+  background: url('./images/logo.png') center center no-repeat;
+}
 body {
-    background-color: green;
-    h1 {
-        color: red;
-    }
-    p {
-        color: yellow;
-    }
+  h1 {
+    color: red;
+  }
+  p {
+    color: yellow;
+  }
 }

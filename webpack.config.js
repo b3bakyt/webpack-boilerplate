@@ -42,6 +42,14 @@ module.exports = {
       {
         test: /\.pug$/,
         use: ['html-loader', 'pug-html-loader'],
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)/,
+        use: [
+          'file-loader?name=/images/[name].[ext]',
+          // 'file-loader?name=[name].[ext]&outputPath=/images/&publicPath=/images/',
+          'image-webpack-loader'
+        ],
       }
     ]
   },
@@ -51,7 +59,6 @@ module.exports = {
     hot: true,
     port: 9000,
     stats: "errors-only",
-    open: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -61,7 +68,7 @@ module.exports = {
       // },
       hash: true,
       excludeChunks: ['contact'],
-      template: './src/index.pug'
+      template: './src/index.html'
     }),
     new HtmlWebpackPlugin({
       title: 'Contact page',
