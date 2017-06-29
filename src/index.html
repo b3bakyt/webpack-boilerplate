@@ -1,15 +1,51 @@
 <!DOCTYPE html>
-<html lang=en>
-<head><title></title>
-    <script>foo && bar(6)</script>
-    <link href="app.css?51ffb9b421b8d5ef26c6" rel="stylesheet">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
 </head>
 <body>
-    <h1>Pug - node template engine</h1>
-    <div class=col id=container><p>Get on it!</p>
-        <p>Pug is a terse and simple templating language with a strong focus on performance and powerful features.</p>
+<div class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src=<%= require("./images/logo.png") %> />
+            </div>
+            <div class="col-lg-8">
+                <h1>Webpack 3 and Twitter Bootstrap</h1>
+                <div class="col-md-" id=container><p>Get on it!</p>
+                    <p>How to configure Webpack 3 to load Twitter Bootstrap SCSS and JavaScript.</p>
+                </div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                    Launch demo modal
+                </button>
+            </div>
+        </div>
     </div>
-    <img src=<%= require("./images/logo.svg") %> />
-    <script type="text/javascript" src="app.bundle.js?51ffb9b421b8d5ef26c6"></script>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
